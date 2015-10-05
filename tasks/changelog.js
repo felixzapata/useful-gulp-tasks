@@ -8,14 +8,16 @@ var gulp = require('gulp'),
 gulp.task('changelog', function (done) {
 
   fs.readFile('./package.json', 'utf8', function (err, rawData) {
-    var file = fs.createWriteStream('CHANGELOG.md');
+    var file = fs.createWriteStream('CHANGELOG.md', { flags: 'a' });
 
     file.on('finish', function () {
       done();
     });
 
     conventionalChangelog({
+      append: true,
       preset: 'angular',
+      host: 'github',
     }, { linkReferences: true }).pipe(file);
 
 
