@@ -17,6 +17,14 @@ gulp.task('commit-changes', function () {
 });
 
 
+gulp.task('commit-changelog', function () {
+  var version = getPackageJSONVersion();
+  return gulp.src('CHANGELOG.md')
+    .pipe($.git.add())
+    .pipe($.git.commit('docs(CHANGELOG.md): update CHANGELOG.md with version ' + version));
+});
+
+
 gulp.task('create-new-tag', function () {
   var version = getPackageJSONVersion();
   return $.git.tag(version, 'New version ' + version, function (error) {
